@@ -4,7 +4,7 @@
  * Manages game state, entities, UI interactions, and the game loop.
  */
 
-import { WIDTH, HEIGHT, TILE_SIZE, COLS, ROWS, COLORS, TOWER_TYPES, WAVES } from './constants.js';
+import { WIDTH, HEIGHT, TILE_SIZE, COLS, ROWS, COLORS, TOWER_TYPES, WAVES, PATH } from './constants.js';
 import { isBuildable, pixelToGrid, gridToPixel } from './utils.js';
 import { AudioManager } from '../systems/audio.js';
 import { SaveManager } from '../systems/save.js';
@@ -775,8 +775,89 @@ export class Game {
 
     // Draw path
     ctx.fillStyle = COLORS.path;
-    for (let i = 0; i < this.waveManager.PATH?.length - 1 || 0; i++) {
-      // Path drawing logic here
+    for (let i = 0; i < PATH.length - 1; i++) {
+      const p1 = PATH[i];
+      const p2 = PATH[i + 1];
+      const minC = Math.min(p1.c, p2.c);
+      const maxC = Math.max(p1.c, p2.c);
+      const minR = Math.min(p1.r, p2.r);
+      const maxR = Math.max(p1.r, p2.r);
+      ctx.fillRect(minC * TILE_SIZE, minR * TILE_SIZE, (maxC - minC + 1) * TILE_SIZE, (maxR - minR + 1) * TILE_SIZE);
+    }
+
+    // Draw path border
+    ctx.strokeStyle = COLORS.pathBorder;
+    ctx.lineWidth = 2;
+    for (let i = 0; i < PATH.length - 1; i++) {
+      const p1 = PATH[i];
+      const p2 = PATH[i + 1];
+      const minC = Math.min(p1.c, p2.c);
+      const maxC = Math.max(p1.c, p2.c);
+      const minR = Math.min(p1.r, p2.r);
+      const maxR = Math.max(p1.r, p2.r);
+      ctx.strokeRect(minC * TILE_SIZE + 1, minR * TILE_SIZE + 1, (maxC - minC + 1) * TILE_SIZE - 2, (maxR - minR + 1) * TILE_SIZE - 2);
+    }
+
+    // Draw spawn point
+    const spawn = { x: PATH[0].c * TILE_SIZE + TILE_SIZE/2, y: PATH[0].r * TILE_SIZE + TILE_SIZE/2 };
+    ctx.fillStyle = COLORS.spawn;
+    ctx.shadowColor = COLORS.spawn;
+    ctx.shadowBlur = 20;
+    ctx.beginPath();
+    ctx.arc(spawn.x, spawn.y, 18, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 12px Rajdhani, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('SPAWN', spawn.x, spawn.y + 4);
+
+    // Draw base
+    const base = { x: PATH[PATH.length-1].c * TILE_SIZE + TILE_SIZE/2, y: PATH[PATH.length-1].r * TILE_SIZE + TILE_SIZE/2 };
+    ctx.fillStyle = COLORS.base;
+    ctx.shadowColor = COLORS.base;
+    ctx.shadowBlur = 25;
+    ctx.beginPath();
+    ctx.arc(base.x, base.y, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = COLORS.baseInner;
+    ctx.beginPath();
+    ctx.arc(base.x, base.y, 14, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#0a0a1a';
+    ctx.font = 'bold 14px Orbitron, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('BASE', base.x, base.y + 5);
+
+    // Draw build preview
+    if (this.buildMode && this.selectedTowerType) {
+      const g = pixelToGrid(this.mouseX, this.mouseY);
+      if (g.c >= 0 && g.c < COLS && g.r >= 0 && g.r < ROWS) {
+        const px = g.c * TILE_SIZE;
+        const py = g.r * TILE_SIZE;
+        const valid = isBuildable(g.c, g.r, this.towers);
+
+        ctx.fillStyle = valid ? 'rgba(78, 204, 163, 0.2)' : 'rgba(233, 69, 96, 0.2)';
+        ctx.fillRect(px, py, TILE_SIZE, TILE_SIZE);
+        ctx.strokeStyle = valid ? '#4ecca3' : '#e94560';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(px, py, TILE_SIZE, TILE_SIZE);
+
+        if (valid) {
+          const range = TOWER_TYPES[this.selectedTowerType].range * TILE_SIZE;
+          const cx = px + TILE_SIZE/2;
+          const cy = py + TILE_SIZE/2;
+          ctx.beginPath();
+          ctx.arc(cx, cy, range, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(244, 162, 97, 0.1)';
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(244, 162, 97, 0.4)';
+          ctx.setLineDash([4, 4]);
+          ctx.stroke();
+          ctx.setLineDash([]);
+        }
+      }
     }
 
     // Draw towers
