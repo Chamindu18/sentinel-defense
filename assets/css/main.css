@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Body styling - dark space-like background */
@@ -19,6 +20,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
 }
 
 /* Game wrapper - adds glow effect around the game */
@@ -28,6 +30,9 @@ body {
   border: 2px solid #1f4068;
   border-radius: 8px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Canvas where game is drawn */
@@ -201,6 +206,7 @@ body {
   flex-direction: column;
   gap: 12px;
   pointer-events: all;
+  z-index: 200;
 }
 
 #buildPanel.active {
@@ -225,6 +231,7 @@ body {
   display: flex;
   gap: 16px;
   justify-content: center;
+  flex-wrap: wrap;
 }
 
 .tower-card {
@@ -301,6 +308,7 @@ body {
   gap: 16px;
   pointer-events: all;
   box-shadow: 0 0 40px rgba(244, 162, 97, 0.2);
+  z-index: 300;
 }
 
 #towerPopup.active {
@@ -409,6 +417,8 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   animation: pulse 1.5s infinite;
+  z-index: 150;
+  white-space: nowrap;
 }
 
 #startWaveBtn.active {
@@ -511,4 +521,336 @@ body {
 #pauseScreen, #resultScreen, #settingsScreen {
   background: rgba(10, 10, 26, 0.92);
   backdrop-filter: blur(8px);
+  z-index: 400;
+}
+
+/* ========== MOBILE RESPONSIVE STYLES ========== */
+
+/* Tablet landscape and smaller desktops */
+@media (max-width: 1000px) {
+  #game-wrapper {
+    transform: scale(0.95);
+  }
+}
+
+@media (max-width: 900px) {
+  #game-wrapper {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 800px) {
+  #game-wrapper {
+    transform: scale(0.75);
+  }
+}
+
+@media (max-width: 700px) {
+  #game-wrapper {
+    transform: scale(0.65);
+  }
+}
+
+@media (max-width: 600px) {
+  #game-wrapper {
+    transform: scale(0.55);
+  }
+}
+
+/* Tablet styles */
+@media (max-width: 768px) {
+  .hud-btn, .menu-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+    min-width: 60px;
+  }
+  
+  .hud-item {
+    font-size: 14px;
+  }
+  
+  .hud-item .label {
+    font-size: 10px;
+  }
+  
+  .hud-item .value {
+    font-size: 16px;
+  }
+  
+  .tower-card {
+    width: 130px;
+    padding: 8px;
+  }
+  
+  .tower-card h4 {
+    font-size: 12px;
+  }
+  
+  .tower-cost, .tower-stats-mini {
+    font-size: 10px;
+  }
+  
+  .modal-panel {
+    padding: 20px 24px;
+    width: 90%;
+    max-width: 320px;
+  }
+  
+  .modal-panel h2 {
+    font-size: 24px;
+  }
+  
+  .menu-buttons {
+    width: 240px;
+  }
+  
+  #waveAnnounce {
+    font-size: 32px;
+  }
+  
+  #startWaveBtn {
+    font-size: 12px;
+    padding: 6px 16px;
+    top: 65px;
+  }
+  
+  .popup-stats {
+    font-size: 12px;
+    gap: 6px 12px;
+  }
+  
+  #mainMenu h1 {
+    font-size: 36px;
+  }
+  
+  #mainMenu .subtitle {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .hud-bar {
+    padding: 0 10px;
+    height: 48px;
+  }
+  
+  .hud-left, .hud-right {
+    gap: 10px;
+  }
+  
+  .hud-item .value {
+    font-size: 14px;
+  }
+  
+  .hud-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  
+  .tower-cards {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .tower-card {
+    width: 110px;
+    padding: 6px;
+  }
+  
+  .tower-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  .result-stats {
+    font-size: 12px;
+    gap: 8px 16px;
+  }
+  
+  .star {
+    font-size: 28px;
+  }
+  
+  .build-header h3 {
+    font-size: 14px;
+  }
+  
+  .popup-buttons {
+    flex-wrap: wrap;
+  }
+  
+  .popup-btn {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  #towerPopup {
+    padding: 16px 20px;
+    min-width: 260px;
+  }
+  
+  .settings-row {
+    width: 240px;
+    gap: 12px;
+  }
+  
+  .settings-row label {
+    font-size: 14px;
+  }
+  
+  .settings-row input[type="range"] {
+    width: 120px;
+  }
+  
+  #mainMenu h1 {
+    font-size: 28px;
+  }
+  
+  #mainMenu .subtitle {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .menu-btn:active, .hud-btn:active, .tower-card:active, .popup-btn:active {
+    transform: scale(0.97);
+    transition: transform 0.05s;
+  }
+  
+  .menu-btn:hover, .hud-btn:hover, .tower-card:hover, .popup-btn:hover {
+    transform: none;
+  }
+  
+  button, .tower-card {
+    cursor: pointer;
+  }
+  
+  #gameCanvas {
+    cursor: pointer;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  #game-wrapper {
+    transform: scale(0.65);
+  }
+  
+  .hud-bar {
+    height: 44px;
+  }
+  
+  .hud-item {
+    font-size: 12px;
+  }
+  
+  .hud-item .label {
+    font-size: 9px;
+  }
+  
+  .hud-item .value {
+    font-size: 14px;
+  }
+  
+  #startWaveBtn {
+    top: 55px;
+    font-size: 10px;
+    padding: 4px 12px;
+  }
+}
+
+/* Small phones in landscape */
+@media (max-width: 480px) and (orientation: landscape) {
+  #game-wrapper {
+    transform: scale(0.5);
+  }
+}
+
+/* Orientation warning (shown on portrait mode on phones) */
+#orientation-warning {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(10, 10, 26, 0.98);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-family: 'Orbitron', monospace;
+  flex-direction: column;
+  gap: 20px;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  #orientation-warning {
+    display: flex;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #f4a261;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e94560;
+}
+
+/* Loading animation (optional) */
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Orbitron', monospace;
+  color: #f4a261;
+  font-size: 20px;
+  animation: pulse 1s infinite;
+}
+
+/* Utility classes */
+.text-gold {
+  color: #f4a261;
+}
+
+.text-cyan {
+  color: #a8d8ea;
+}
+
+.text-green {
+  color: #4ecca3;
+}
+
+.text-red {
+  color: #e94560;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
 }
