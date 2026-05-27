@@ -1,0 +1,514 @@
+/* Import futuristic fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+/* Reset all default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styling - dark space-like background */
+body {
+  background: #0a0a1a;
+  color: #eee;
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Game wrapper - adds glow effect around the game */
+#game-wrapper {
+  position: relative;
+  box-shadow: 0 0 60px rgba(83, 52, 131, 0.4), 0 0 120px rgba(15, 52, 96, 0.2);
+  border: 2px solid #1f4068;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Canvas where game is drawn */
+#gameCanvas {
+  display: block;
+  background: #0f0f23;
+  cursor: crosshair;
+}
+
+/* Screen base styles - for menus, pause, etc. */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Active screen becomes visible and clickable */
+.screen.active {
+  display: flex;
+  pointer-events: all;
+}
+
+/* Main Menu specific styles */
+#mainMenu {
+  background: linear-gradient(135deg, rgba(15, 15, 35, 0.98) 0%, rgba(22, 33, 62, 0.95) 100%);
+}
+
+#mainMenu h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 52px;
+  font-weight: 900;
+  color: #f4a261;
+  text-shadow: 0 0 20px rgba(244, 162, 97, 0.5), 0 0 40px rgba(244, 162, 97, 0.2);
+  margin-bottom: 10px;
+  letter-spacing: 4px;
+}
+
+#mainMenu .subtitle {
+  font-size: 18px;
+  color: #a8d8ea;
+  margin-bottom: 50px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+}
+
+/* Menu button container */
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 280px;
+}
+
+/* Individual menu buttons */
+.menu-btn {
+  background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+  border: 2px solid #f4a261;
+  color: #f4a261;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-btn:hover {
+  background: linear-gradient(135deg, #f4a261 0%, #e94560 100%);
+  color: #0a0a1a;
+  border-color: #f4a261;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(244, 162, 97, 0.4);
+}
+
+.menu-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* HUD (Heads Up Display) - always visible during gameplay */
+#hud {
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0;
+  pointer-events: none;
+}
+
+.hud-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(180deg, rgba(15, 15, 35, 0.95) 0%, rgba(15, 15, 35, 0.7) 100%);
+  border-bottom: 2px solid #1f4068;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  pointer-events: all;
+}
+
+.hud-left, .hud-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f4a261;
+}
+
+.hud-item .label {
+  color: #a8d8ea;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hud-item .value {
+  color: #f4a261;
+  text-shadow: 0 0 10px rgba(244, 162, 97, 0.3);
+}
+
+.hud-btn {
+  background: rgba(15, 52, 96, 0.8);
+  border: 1px solid #f4a261;
+  color: #f4a261;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.hud-btn:hover {
+  background: #f4a261;
+  color: #0a0a1a;
+}
+
+/* Build Panel - appears at bottom when building towers */
+#buildPanel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(0deg, rgba(15, 15, 35, 0.98) 0%, rgba(22, 33, 62, 0.9) 100%);
+  border-top: 2px solid #1f4068;
+  padding: 16px 24px;
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: all;
+}
+
+#buildPanel.active {
+  display: flex;
+}
+
+.build-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.build-header h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: #f4a261;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+/* Tower selection cards */
+.tower-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.tower-card {
+  background: linear-gradient(135deg, rgba(15, 52, 96, 0.6) 0%, rgba(22, 33, 62, 0.8) 100%);
+  border: 2px solid #1f4068;
+  border-radius: 8px;
+  padding: 12px 16px;
+  width: 180px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tower-card:hover {
+  border-color: #f4a261;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(244, 162, 97, 0.2);
+}
+
+.tower-card.selected {
+  border-color: #f4a261;
+  background: linear-gradient(135deg, rgba(244, 162, 97, 0.15) 0%, rgba(233, 69, 96, 0.1) 100%);
+}
+
+.tower-card.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.tower-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.tower-card h4 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #eee;
+  margin-bottom: 4px;
+}
+
+.tower-cost {
+  color: #f4a261;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.tower-stats-mini {
+  font-size: 12px;
+  color: #a8d8ea;
+  line-height: 1.6;
+}
+
+/* Tower info popup */
+#towerPopup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, rgba(15, 15, 35, 0.98) 0%, rgba(22, 33, 62, 0.95) 100%);
+  border: 2px solid #f4a261;
+  border-radius: 12px;
+  padding: 28px 32px;
+  min-width: 300px;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  pointer-events: all;
+  box-shadow: 0 0 40px rgba(244, 162, 97, 0.2);
+}
+
+#towerPopup.active {
+  display: flex;
+}
+
+#towerPopup h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: #f4a261;
+  font-size: 20px;
+  text-align: center;
+}
+
+.popup-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 14px;
+  color: #a8d8ea;
+}
+
+.popup-stats span:nth-child(odd) {
+  color: #888;
+}
+
+.popup-stats span:nth-child(even) {
+  color: #f4a261;
+  font-weight: 600;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.popup-btn {
+  flex: 1;
+  background: #0f3460;
+  border: 2px solid #1f4068;
+  color: #eee;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.popup-btn:hover {
+  border-color: #f4a261;
+  color: #f4a261;
+}
+
+.popup-btn.primary {
+  background: linear-gradient(135deg, #f4a261 0%, #e94560 100%);
+  border-color: #f4a261;
+  color: #0a0a1a;
+}
+
+/* Wave announcement animation */
+#waveAnnounce {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 48px;
+  font-weight: 900;
+  color: #f4a261;
+  text-shadow: 0 0 30px rgba(244, 162, 97, 0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 100;
+}
+
+#waveAnnounce.show {
+  opacity: 1;
+  animation: wavePulse 2s ease-out forwards;
+}
+
+@keyframes wavePulse {
+  0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+  20% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+
+/* Start wave button */
+#startWaveBtn {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #f4a261 0%, #e94560 100%);
+  border: 2px solid #f4a261;
+  color: #0a0a1a;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 28px;
+  cursor: pointer;
+  display: none;
+  pointer-events: all;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: pulse 1.5s infinite;
+}
+
+#startWaveBtn.active {
+  display: block;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 162, 97, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(244, 162, 97, 0); }
+}
+
+/* Modal panels for pause, settings, results */
+.modal-panel {
+  background: linear-gradient(135deg, rgba(22, 33, 62, 0.95) 0%, rgba(15, 15, 35, 0.98) 100%);
+  border: 2px solid #f4a261;
+  border-radius: 16px;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 0 60px rgba(83, 52, 131, 0.3);
+}
+
+.modal-panel h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 32px;
+  color: #f4a261;
+}
+
+.modal-panel h2.victory {
+  color: #4ecca3;
+}
+
+.modal-panel h2.defeat {
+  color: #e94560;
+}
+
+.result-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+.result-stats .stat-label {
+  color: #a8d8ea;
+  text-align: right;
+}
+
+.result-stats .stat-value {
+  color: #f4a261;
+  font-weight: 700;
+  text-align: left;
+}
+
+.stars {
+  display: flex;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.star {
+  font-size: 36px;
+  color: #333;
+  transition: color 0.5s ease;
+}
+
+.star.earned {
+  color: #f4a261;
+}
+
+/* Settings panel */
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 280px;
+  gap: 20px;
+}
+
+.settings-row label {
+  color: #a8d8ea;
+  font-size: 16px;
+}
+
+.settings-row input[type="range"] {
+  width: 140px;
+  accent-color: #f4a261;
+}
+
+.settings-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #f4a261;
+}
+
+/* Pause and result screen backgrounds */
+#pauseScreen, #resultScreen, #settingsScreen {
+  background: rgba(10, 10, 26, 0.92);
+  backdrop-filter: blur(8px);
+}
