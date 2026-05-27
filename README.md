@@ -212,24 +212,6 @@ http://localhost:8000
 
 ---
 
-## 📸 Screenshots
-
-![Game Lobby](#)  
-*Main menu and game start interface*
-
-![Gameplay](#)  
-*In-game tower placement and combat*
-
-![Wave Complete](#)  
-*Victory screen after wave completion*
-
-![Save System](#)  
-*Progress saved and restored from LocalStorage*
-
-> 📝 *Add actual screenshots by uploading PNG files to your repository and linking them*
-
----
-
 ## 🛠️ Development Guide
 
 ### Adding a New Tower Type
