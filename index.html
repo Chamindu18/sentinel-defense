@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel Defense - Tower Defense Game</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <div id="game-container" style="position:relative;width:1000px;height:600px;">
+            <canvas id="gameCanvas" width="1000" height="600"></canvas>
+
+            <!-- Main Menu Screen -->
+            <div id="mainMenu" class="screen active">
+                <h1>SENTINEL DEFENSE</h1>
+                <div class="subtitle">Tower Defense Strategy</div>
+                <div class="menu-buttons">
+                    <button class="menu-btn" id="btnStart">Start New Game</button>
+                    <button class="menu-btn" id="btnContinue" disabled>Continue</button>
+                    <button class="menu-btn" id="btnSettings">Settings</button>
+                    <button class="menu-btn" id="btnExit">Exit</button>
+                </div>
+            </div>
+
+            <!-- HUD (Heads Up Display) -->
+            <div id="hud" class="screen">
+                <div class="hud-bar">
+                    <div class="hud-left">
+                        <div class="hud-item">
+                            <span class="label">Coins</span>
+                            <span class="value" id="hudMoney">150</span>
+                        </div>
+                        <div class="hud-item">
+                            <span class="label">Wave</span>
+                            <span class="value" id="hudWave">1 / 10</span>
+                        </div>
+                        <div class="hud-item">
+                            <span class="label">Health</span>
+                            <span class="value" id="hudHealth">20</span>
+                        </div>
+                    </div>
+                    <div class="hud-right">
+                        <button class="hud-btn" id="btnBuild">Build</button>
+                        <button class="hud-btn" id="btnPause">Pause</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Build Panel (for selecting towers) -->
+            <div id="buildPanel">
+                <div class="build-header">
+                    <h3>Select Tower</h3>
+                    <button class="hud-btn" id="btnCancelBuild">Close</button>
+                </div>
+                <div class="tower-cards" id="towerCards"></div>
+            </div>
+
+            <!-- Tower Info Popup -->
+            <div id="towerPopup">
+                <h3 id="popupTowerName">Tower</h3>
+                <div class="popup-stats" id="popupStats"></div>
+                <div class="popup-buttons">
+                    <button class="popup-btn primary" id="btnUpgrade">Upgrade</button>
+                    <button class="popup-btn" id="btnSell">Sell</button>
+                    <button class="popup-btn" id="btnClosePopup">Close</button>
+                </div>
+            </div>
+
+            <!-- Pause Screen -->
+            <div id="pauseScreen" class="screen">
+                <div class="modal-panel">
+                    <h2>Paused</h2>
+                    <div class="menu-buttons" style="width:240px;">
+                        <button class="menu-btn" id="btnResume">Resume</button>
+                        <button class="menu-btn" id="btnRestart">Restart</button>
+                        <button class="menu-btn" id="btnSettingsPause">Settings</button>
+                        <button class="menu-btn" id="btnQuit">Exit to Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Screen (Victory/Defeat) -->
+            <div id="resultScreen" class="screen">
+                <div class="modal-panel">
+                    <h2 id="resultTitle" class="victory">Victory!</h2>
+                    <div class="stars" id="resultStars">
+                        <span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                    </div>
+                    <div class="result-stats" id="resultStats"></div>
+                    <div class="menu-buttons" style="width:240px;">
+                        <button class="menu-btn" id="btnReplay">Play Again</button>
+                        <button class="menu-btn" id="btnMenuResult">Main Menu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Screen -->
+            <div id="settingsScreen" class="screen">
+                <div class="modal-panel">
+                    <h2>Settings</h2>
+                    <div class="settings-row">
+                        <label>Sound Volume</label>
+                        <input type="range" id="volSound" min="0" max="100" value="70">
+                    </div>
+                    <div class="settings-row">
+                        <label>Music Volume</label>
+                        <input type="range" id="volMusic" min="0" max="100" value="50">
+                    </div>
+                    <div class="settings-row">
+                        <label>Show Grid</label>
+                        <input type="checkbox" id="chkGrid" checked>
+                    </div>
+                    <div class="menu-buttons" style="width:240px;margin-top:16px;">
+                        <button class="menu-btn" id="btnBackSettings">Back</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Wave Announcement -->
+            <div id="waveAnnounce">Wave 1</div>
+
+            <!-- Start Wave Button -->
+            <button id="startWaveBtn">Start Wave</button>
+
+            <!-- Tooltip -->
+            <div id="tooltip"></div>
+        </div>
+    </div>
+
+    <!-- We'll add JavaScript files here later -->
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
