@@ -311,12 +311,12 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 ## 📞 Contact & Links
 
-**👨‍💻 Developer:** [Your Name]
+**👨‍💻 Developer:** [Chamindu Hansana]
 
-- 🌐 **Portfolio:** [your-portfolio.com](https://your-portfolio.com)
-- 💼 **LinkedIn:** [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- 🐙 **GitHub:** [github.com/yourusername](https://github.com/yourusername)
-- 📧 **Email:** your.email@example.com
+- 🌐 **Portfolio:** [Chamindu-portfolio.com]( chamindu18.github.io/Chamindu-Portfolio)
+- 💼 **LinkedIn:** [linkedin.com/in/chamindu](https://www.linkedin.com/in/chamindu-hansana-a0b39a362/)
+- 🐙 **GitHub:** [github.com/Chamindu18](https://github.com/Chamindu18)
+- 📧 **Email:** chamindu553@gmail.com
 
 ---
 
@@ -331,11 +331,9 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 <div align="center">
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by [Chamindu]**
 
 *If you enjoy this game, please consider leaving a ⭐ star on GitHub!*
-
-[Play Now](#-live-demo) • [Report Issue](https://github.com/yourusername/sentinel-defense/issues) • [Request Feature](https://github.com/yourusername/sentinel-defense/issues/new)
 
 </div>
 
